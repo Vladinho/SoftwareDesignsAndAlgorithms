@@ -18,7 +18,7 @@ export class Point implements IPoint {
   private roundToTwo(num: number): number {
     return Math.round(num * 100) / 100
   }
-  private getDistanceBetweenPoints = (endPoint: Point) => {
+  private getDistanceBetweenPoints = (endPoint: Point): number => {
     const y = endPoint.x - this.x;
     const x = endPoint.y - this.y;
     return this.roundToTwo(Math.sqrt(x * x + y * y));

@@ -8,7 +8,7 @@ interface IPoint {
 export class Point implements IPoint {
   constructor (public x: number = 0, public y: number = 0) {}
   toString = () => `(${this.x}, ${this.y})`;
-  distance = (...args) => {
+  distance = (...args): number => {
     switch (args.length) {
       case 1: return this.getDistanceBetweenPoints(args[0]);
       case 2: return this.getDistanceBetweenPoints(new Point(args[0], args[1]));

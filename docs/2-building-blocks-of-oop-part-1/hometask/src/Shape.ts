@@ -1,14 +1,13 @@
 import { Point } from './Point';
 
-const MIN_POINTS_NUMBER = 3;
-
 export abstract class Shape {
+    private MIN_POINTS_NUMBER = 3;
     constructor (
       private points: [Point, Point, ...Point[]],
       protected color: string = 'green',
       protected filled: boolean = true,
       ) {
-        if (MIN_POINTS_NUMBER > this.points.length) {
+        if (this.MIN_POINTS_NUMBER > this.points.length) {
             throw new Error();
         }
     }

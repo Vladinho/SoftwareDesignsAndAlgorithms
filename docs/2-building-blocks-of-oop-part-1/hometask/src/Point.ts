@@ -15,9 +15,12 @@ export class Point implements IPoint {
       default: return this.getDistanceBetweenPoints(new Point());
     }
   }
+  private roundToTwo(num: number): number {
+    return Math.round(num * 100) / 100
+  }
   private getDistanceBetweenPoints = (endPoint: Point) => {
     const y = endPoint.x - this.x;
     const x = endPoint.y - this.y;
-    return Math.sqrt(x * x + y * y);
+    return this.roundToTwo(Math.sqrt(x * x + y * y));
   }
 }

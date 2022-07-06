@@ -24,7 +24,7 @@ export abstract class Shape implements IShape {
         }, '')
         return `A Shape with color of ${this.color} and ${this.filled ? '' : 'not '}filled. Points: ${points}.`
     }
-    getPerimeter = () => {
+    getPerimeter = (): number => {
         return this.points.reduce((acc, cur, currentIndex) => {
             return acc + (currentIndex ? cur.distance(this.points[currentIndex - 1]) : cur.distance(this.points[this.points.length - 1]));
         }, 0)

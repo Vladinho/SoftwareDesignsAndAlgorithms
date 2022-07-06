@@ -20,7 +20,7 @@ export class Triangle extends Shape {
   getType = () => {
     return `${triangleTypesMap[this.defineType()]} triangle`;
   }
-  toString = () => {
+  toString = (): string => {
     return `Triangle[v1=(${this.p1.x}, ${this.p1.y}),v2=(${this.p2.x}, ${this.p2.y}),v3=(${this.p3.x}, ${this.p3.y})]`
   }
   private defineType = (): TriangleTypes => {

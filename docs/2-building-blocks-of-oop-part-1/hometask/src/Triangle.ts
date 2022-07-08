@@ -1,4 +1,4 @@
-import { IShape, Shape } from './Shape';
+import { Shape } from './Shape';
 import { Point } from './Point';
 
 enum TriangleTypes {

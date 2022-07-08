@@ -3,12 +3,12 @@ import { Point } from './Point';
 export abstract class Shape {
     private MIN_POINTS_NUMBER = 3;
     constructor (
-      private points: [Point, Point, ...Point[]],
+      private points: Point[],
       protected color: string = 'green',
       protected filled: boolean = true,
       ) {
         if (this.MIN_POINTS_NUMBER > this.points.length) {
-            throw new Error();
+            throw new Error(`Min points number is ${this.MIN_POINTS_NUMBER}, but you have only ${this.points.length}.`);
         }
     }
     abstract getType(): string;

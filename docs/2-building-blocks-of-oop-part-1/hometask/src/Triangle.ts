@@ -17,7 +17,7 @@ export class Triangle extends Shape {
   constructor (private p1: Point, private p2: Point, private p3: Point, color?: string, filled?: boolean) {
     super([p1, p2, p3], color, filled);
   }
-  getType (): string {
+  getType = () => {
     return `${triangleTypesMap[this.defineType()]} triangle`;
   }
   toString = () => {

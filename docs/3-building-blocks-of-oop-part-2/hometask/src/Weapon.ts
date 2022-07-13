@@ -1,9 +1,4 @@
-import { IItemProps, Item } from './Item';
-
-export interface IWeaponProps {
-  baseDamage: number;
-  baseDurability: number;
-}
+import { Item } from './Item';
 
 interface IWeapon {
   getDamage: () => number;
@@ -12,16 +7,12 @@ interface IWeapon {
 }
 
 export class Weapon extends Item implements IWeapon {
-  private baseDamage: number;
   private damageModifier: number = 0;
-  private baseDurability: number;
   private durabilityModifier: number = 0;
   static MODIFIER_CHANGE_RATE: 0.05;
 
-  constructor ({name, value, weight, baseDamage, baseDurability}: IWeaponProps & IItemProps) {
-    super({name, value, weight});
-    this.baseDamage = baseDamage;
-    this.baseDurability = baseDurability;
+  constructor (name, value, weight, private baseDamage, private baseDurability) {
+    super(name, value, weight);
   }
 
   private checkIsBroken = (): boolean => this.getDurability() < 0;
@@ -42,7 +33,6 @@ export class Weapon extends Item implements IWeapon {
       return 'You can\'t use the hammer, it is broken.';
     }
     this.durabilityModifier -= Weapon.MODIFIER_CHANGE_RATE;
-    const isBroken = this.checkIsBroken();
-    return `You use the ${this.name}, dealing ${this.getDamage()} points of damage.${isBroken ? ` The ${this.name} breaks.` : ''}`
+    return `You use the ${this.name}, dealing ${this.getDamage()} points of damage.${this.checkIsBroken() ? ` The ${this.name} breaks.` : ''}`
   };
 }

@@ -16,10 +16,7 @@ interface IItem {
 export abstract class Item implements Comparable<Item>, IItem {
     private itemValueComparator = new ItemValueComparator();
     protected readonly id: number;
-    protected value: number;
-    protected name: string;
-    protected weight: number;
-    protected constructor ({ name, value, weight }: IItemProps) {
+    protected constructor (protected name: string, protected value: number, protected weight: number) {
         this.id = id;
         this.name = name;
         this.value = value;

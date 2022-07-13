@@ -1,13 +1,8 @@
-import { IWeaponProps, Weapon } from './Weapon';
-
-interface IBowProps extends IWeaponProps{
-  value: number;
-  weight: number;
-}
+import { Weapon } from './Weapon';
 
 export class Bow extends Weapon {
-  constructor (props: IBowProps) {
-    super({ ...props, name: 'bow'});
+  constructor (baseDamage: number, baseDurability: number, value: number, weight: number) {
+    super('bow', value, weight, baseDamage, baseDurability);
     this.setBaseDamage(50);
     this.setBaseDurability(70);
   }

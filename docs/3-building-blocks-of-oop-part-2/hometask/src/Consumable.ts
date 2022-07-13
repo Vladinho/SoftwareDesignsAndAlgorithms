@@ -1,19 +1,15 @@
-import { IItemProps, Item } from './Item';
+import { Item } from './Item';
 
 interface IConsumable {
   use: () => string;
-}
-
-interface IConsumableProps extends IItemProps {
-  spoiled: boolean
 }
 
 export class Consumable extends Item implements IConsumable {
   private isSpoiled: boolean
   private isConsumed: boolean
 
-  constructor ({name, value, weight, spoiled}: IConsumableProps) {
-    super({name, value, weight});
+  constructor (name: string, value: number, weight: number, private spoiled: boolean) {
+    super(name, value, weight);
     this.isSpoiled = spoiled;
   }
 

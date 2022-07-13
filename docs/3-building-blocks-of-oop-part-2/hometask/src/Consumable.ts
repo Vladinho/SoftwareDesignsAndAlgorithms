@@ -26,6 +26,9 @@ export class Consumable extends Item implements IConsumable {
     }
     return this.eat();
   };
-  private eat = () => `You eat the ${this.name}.`;
-  private setConsumed = (consumed: boolean) => this.isConsumed = consumed;
+  protected eat = () => {
+    this.setConsumed(true);
+    return `You eat the ${this.name}.`
+  };
+  protected setConsumed = (consumed: boolean) => this.isConsumed = consumed;
 }

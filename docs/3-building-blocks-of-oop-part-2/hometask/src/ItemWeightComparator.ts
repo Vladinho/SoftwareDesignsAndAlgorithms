@@ -1,8 +1,10 @@
 import { Item } from './Item';
-import { ItemComparator } from './ItemComparator';
+import { BaseComparator, ItemComparator } from './ItemComparator';
 
-export class ItemWeightComparator implements ItemComparator {
+export class ItemWeightComparator extends BaseComparator implements ItemComparator {
     public compare(first: Item, second: Item) {
-        // your code goes here
+        const firstWeight = first.getWeight();
+        const secondWeight = second.getWeight();
+        return this.compareTwoValues(firstWeight, secondWeight);
     }
 }

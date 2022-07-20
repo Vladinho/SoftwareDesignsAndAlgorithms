@@ -1,4 +1,10 @@
 // Create the inventory
+import { Inventory } from './Inventory';
+import { Item } from './Item';
+import { Sword } from './Sword';
+import { ItemWeightComparator } from './ItemWeightComparator';
+import { Pizza } from './Pizza';
+
 const inventory: Inventory = new Inventory();
 
 // Create a set of items

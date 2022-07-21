@@ -15,7 +15,9 @@ import rows from './mocks/rows.json';
 const mockedData: Row[] = rows.data;
 
 function App() {
-  const [data, setData] = useState<Row[]>(undefined);
+  const [data, setData] = useState<Row[]>([]);
+  const [initialData, setInitialData] = useState<Row[]>([]);
+  // const dataRef = useRef<Row[]>([]);
 
   useEffect(() => {
     // fetching data from API
@@ -44,7 +46,9 @@ function App() {
           acc[cur.userID].avatar = cur.url;
           return acc;
         }, rowsObj);
-        setData(Object.values(rowsObj));
+        const rows = Object.values(rowsObj) as Row[];
+        setData(rows);
+        setInitialData(rows);
       }
     );
   }, [])
@@ -54,10 +58,10 @@ function App() {
       <div className="App">
         <div className={styles.container}>
           <div className={styles.sortFilterContainer}>
-            <Filters />
-            <Sort />
+            <Filters store={initialData} updateStore={setData} />
+            <Sort store={initialData} updateStore={setData} />
           </div>
-          <Search />
+          <Search store={initialData} updateStore={setData} />
         </div>
         <Table rows={data || mockedData} />
       </div>

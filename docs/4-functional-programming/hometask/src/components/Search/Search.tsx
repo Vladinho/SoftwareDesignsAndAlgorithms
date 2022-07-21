@@ -6,9 +6,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import styles from './Search.module.scss';
 import { Row } from '../Table';
 
+export interface ISearchStore {
+  searchValue: string;
+  searchedData: Row[];
+}
+
 interface SearchProps {
   store: Row[];
-  updateStore: (rows: Row[]) => void;
+  updateStore: (store: ISearchStore) => void;
 }
 
 // OR
@@ -25,10 +30,10 @@ export function Search({ store, updateStore }: SearchProps) {
 
   const onChange = (value) => {
     setSearchedValue(value);
-    updateStore(
-      store
-        .filter(({country, name, username }) => [country, name, username]
-          .some((str) => str.toLowerCase().includes(value.toLowerCase()))));
+    const newSearchedData = store
+      .filter(({country, name, username }) => [country, name, username]
+        .some((str) => str.toLowerCase().includes(value.toLowerCase())))
+    updateStore({ searchedData: newSearchedData, searchValue: value })
   }
 
   return (

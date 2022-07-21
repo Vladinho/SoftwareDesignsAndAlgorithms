@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StyledEngineProvider } from '@mui/material/styles';
 
-import { Table, Filters, Sort, Search } from './components';
+import { Table, Filters, Sort, Search, ISearchStore } from './components';
 import { getImages, getUsers, getAccounts } from './mocks/api';
 
 import styles from './App.module.scss';
@@ -15,7 +15,8 @@ import rows from './mocks/rows.json';
 const mockedData: Row[] = rows.data;
 
 function App() {
-  const [data, setData] = useState<Row[]>([]);
+  const [filteredData, setFilteredData] = useState<Row[]>([]);
+  const [{ searchValue, searchedData }, setSearchedData] = useState<ISearchStore>({ searchValue: '', searchedData: []});
   const [initialData, setInitialData] = useState<Row[]>([]);
 
   useEffect(() => {
@@ -23,30 +24,31 @@ function App() {
     Promise.all([getImages(), getUsers(), getAccounts()]).then(
       ([images, users, accounts]: [Image[], User[], Account[]]) => {
         console.log(images, users, accounts);
-        const rowsObj = users.reduce((acc, cur) => {
-          acc[cur.userID] = {};
-          acc[cur.userID].name = cur.name;
-          acc[cur.userID].country = cur.country;
-          acc[cur.userID].username = cur.username;
+        const rowsObj = users.reduce((acc, { userID, country, name, username}) => {
+          acc[userID] = {};
+          acc[userID].name = name;
+          acc[userID].country = country;
+          acc[userID].username = username;
           return acc;
         }, {});
-        accounts.reduce((acc, cur) => {
-          acc[cur.userID].posts = cur.posts;
-          const latestPayment = cur.payments.length ? cur.payments.reduce((acc, cur) => {
+        accounts.reduce((acc, { userID, posts, payments}) => {
+          acc[userID].posts = posts;
+          const latestPayment = payments.length ? payments.reduce((acc, cur) => {
             if (!acc) {
               return cur;
             }
            return new Date(acc.date) > new Date(cur.date) ? acc : cur;
           }) : { totalSum: 0 };
-          acc[cur.userID].lastPayments = latestPayment.totalSum;
+          acc[userID].lastPayments = latestPayment.totalSum;
           return acc;
         }, rowsObj);
-        images.reduce((acc, cur) => {
-          acc[cur.userID].avatar = cur.url;
+        images.reduce((acc, { userID, url }) => {
+          acc[userID].avatar = url;
           return acc;
         }, rowsObj);
         const rows = Object.values(rowsObj) as Row[];
-        setData(rows);
+        setFilteredData(rows);
+        setSearchedData((s) => ({ ...s, searchedData: rows }));
         setInitialData(rows);
       }
     );
@@ -57,12 +59,12 @@ function App() {
       <div className="App">
         <div className={styles.container}>
           <div className={styles.sortFilterContainer}>
-            <Filters store={initialData} updateStore={setData} />
-            <Sort store={initialData} updateStore={setData} />
+            <Filters store={initialData} updateStore={setFilteredData} />
+            <Sort store={filteredData} updateStore={setFilteredData} />
           </div>
-          <Search store={initialData} updateStore={setData} />
+          <Search store={filteredData} updateStore={setSearchedData} />
         </div>
-        <Table rows={data || mockedData} />
+        <Table rows={searchValue ? searchedData : filteredData || mockedData} />
       </div>
     </StyledEngineProvider>
   );

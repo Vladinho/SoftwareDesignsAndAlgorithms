@@ -17,7 +17,6 @@ const mockedData: Row[] = rows.data;
 function App() {
   const [data, setData] = useState<Row[]>([]);
   const [initialData, setInitialData] = useState<Row[]>([]);
-  // const dataRef = useRef<Row[]>([]);
 
   useEffect(() => {
     // fetching data from API

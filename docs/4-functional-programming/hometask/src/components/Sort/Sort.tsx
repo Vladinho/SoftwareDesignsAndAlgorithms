@@ -5,10 +5,11 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import styles from './Sort.module.scss'
+import { Row } from '../Table';
 
 interface SortProps {
-  store?: {};
-  updateStore?: (val) => void;
+  store: Row[];
+  updateStore: (rows: Row[]) => void;
 }
 
 // OR
@@ -20,9 +21,10 @@ interface SortProps {
 
 // OR store can be global
 
-export function Sort(props: SortProps) {
+export function Sort({ store, updateStore }: SortProps) {
   const handleChange = (value) => {
-    console.log(value); // for debugging
+    updateStore([...store.sort((a, b) =>
+      value === 'desc' ? a.lastPayments - b.lastPayments : b.lastPayments - a.lastPayments)])
   };
 
   return (

@@ -4,10 +4,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
 import styles from './Search.module.scss';
+import { Filter } from '../../App';
 
 interface SearchProps {
-  store?: {};
-  updateStore?: (val) => void;
+  updateStore: (filter: Filter) => void;
 }
 
 // OR
@@ -19,12 +19,13 @@ interface SearchProps {
 
 // OR store can be global
 
-export function Search(props: SearchProps) {
+export function Search({ updateStore }: SearchProps) {
   const [searchedValue, setSearchedValue] = useState<string>('');
 
   const onChange = (value) => {
-    console.log(value); // for debugging
     setSearchedValue(value);
+    updateStore(value ? ({country, name, username }) => [country, name, username]
+      .some((str) => str.toLowerCase().includes(value.toLowerCase())) : undefined)
   }
 
   return (

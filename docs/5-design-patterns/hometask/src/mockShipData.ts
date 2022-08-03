@@ -8,7 +8,7 @@ export const mockShipData1 = {
 }
 
 export const mockShipData2 = {
-  shipmentID: 42332,
+  shipmentID: 0,
   weight: 1000,
   fromAddress: '5th Ave SE, Bellevue, Wa 4324243',
   fromZipCode: '647776',

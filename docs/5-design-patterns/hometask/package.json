@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "compileUsage": "tsc src/usage.ts"
+    "compileUsage": "tsc src/usage.ts",
+    "runUsage": "node src/usage.js"
   },
   "author": "",
   "license": "ISC",

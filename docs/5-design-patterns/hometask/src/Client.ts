@@ -1,15 +1,18 @@
 import Shipment from './Shipment';
-import { IShipData } from './types';
+import { IShipData, Mark, MarksDecoratorMap } from './types';
+import { MarkDecorator } from './Decorator';
 
 interface IClient {
-  sendShipRequest: (params: IShipData) => void
+  sendShipRequest: (params: IShipData, marks?: Mark[]) => void
 }
 
 class Client implements IClient {
   constructor () {
   }
-  sendShipRequest = (data: IShipData): Shipment => {
-    return  new Shipment(data);
+  sendShipRequest = (data, marks: Mark[] = []): MarkDecorator => {
+    return  marks.reduce<MarkDecorator>((acc, cur) => {
+      return new MarksDecoratorMap[cur](acc as Shipment);
+    }, new Shipment(data));
   }
 }
 

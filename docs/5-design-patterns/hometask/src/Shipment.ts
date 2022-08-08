@@ -1,8 +1,9 @@
 import IdGenerator from './IdGenerator';
 import { IShipData, Wrapper } from './types';
 import ShipperFactory from './Shipper/ShipperFactory';
+import { MarkDecorator } from './Decorator';
 
-interface IShipment {
+interface IShipment extends MarkDecorator {
   getInstance: () => Shipment;
   getShipmentId: () => number;
   ship: () => string;
@@ -21,7 +22,7 @@ class Shipment implements IShipment {
       this.wrapper = Wrapper.OverSized;
     }
   }
-  getInstance = () => this;
+  getInstance = (): Shipment => this;
   getShipmentId = () => {
     if (!this.shipData.shipmentID) {
       this.shipData.shipmentID = new IdGenerator().createId()

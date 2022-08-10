@@ -1,0 +1,19 @@
+{
+  "name": "05_design_patterns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compileUsage": "tsc src/usage.ts",
+    "runUsage": "node src/usage.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}

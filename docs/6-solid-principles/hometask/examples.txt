@@ -1,0 +1,23 @@
+Solid
+
+1. S  https://github.com/angular/angular/blob/main/packages/animations/src/animation_builder.ts#L57
+    AnimationBuilder has only one responsibility.
+2. O https://github.com/angular/angular/blob/main/packages/compiler-cli/integrationtest/src/jit_summaries.ts#L27
+    Base is opened to be extended and closed to be changed.
+3. L https://github.com/angular/angular/blob/main/packages/platform-server/src/domino_adapter.ts#L41
+    Method setRootDomAdapter takes adapter (type - DomAdapter). So BrowserDomAdapter can be easily replaced with DominoAdapter as we can see: https://github.com/angular/angular/blob/main/packages/platform-browser/src/browser/browser_adapter.ts#L22
+4. I  https://github.com/angular/angular/blob/main/packages/platform-browser/src/dom/dom_renderer.ts#L99
+    EmulatedEncapsulationDomRenderer2 or DefaultDomRenderer2 can be return from  createRenderer().
+5. D https://github.com/angular/angular/blob/main/packages/router/src/router.ts#L568 Injector
+
+Anti Solid
+1. S https://github.com/angular/angular/blob/main/packages/router/src/router.ts#L371
+    Router is too clever. I would suggest to split it into NavigationExecuter and NavigationGuards classes and move logic of setupNavigations there.
+2. O https://github.com/angular/angular/blob/main/packages/platform-browser/src/dom/dom_renderer.ts#L95
+    The better way is to remove switch/case and extend DomRendererFactory2.
+3. L https://github.com/angular/angular/blob/main/packages/platform-server/src/domino_adapter.ts#L79
+    getBaseHref returns string, but in the parent class in returns string | null
+4. I https://github.com/angular/angular/blob/main/packages/router/src/router.ts#L251
+    NavigationTransition is too big and complex
+5. D https://github.com/angular/angular/blob/main/packages/compiler-cli/src/ngtsc/metadata/src/util.ts#L202
+    MetadataReader should be a base class and have only abstract method getData.

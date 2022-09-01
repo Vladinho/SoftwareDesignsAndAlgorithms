@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc src/index.ts",
-    "use": "node src/index.js"
+    "compile": "tsc src/usage.ts",
+    "use": "node src/usage.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,9 +1,9 @@
-import { INode, Task } from './types';
+import { INode, IQueue, Task } from './types';
 
-export class Queue {
-  rootNode: INode | null = null;
-  lastNode: INode | null = null;
-  addTask = (task: Task) => {
+export class Queue implements IQueue {
+  rootNode = null;
+  lastNode = null;
+  addTask = (task) => {
     const node: INode = {
       task,
       next: null
@@ -16,7 +16,7 @@ export class Queue {
       this.lastNode = node;
     }
   }
-  takeNode = (): INode | null => {
+  takeNode = () => {
     const node = this.rootNode;
     this.rootNode = this.rootNode?.next || null;
 

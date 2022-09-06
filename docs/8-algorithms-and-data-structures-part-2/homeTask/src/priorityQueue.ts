@@ -3,6 +3,7 @@ import { IPriorityQueue, Task } from './types';
 
 export class PriorityQueue implements IPriorityQueue {
   private TIME_DELAY = 100;
+  constructor (private isAsync = false) {}
   private queues: {
     [key: number]: Queue
   } = {};
@@ -26,15 +27,19 @@ export class PriorityQueue implements IPriorityQueue {
     const arr = Object.keys(this.queues).sort((a, b) => +a - +b);
     for await (const priority of arr) {
         while (this.queues[priority].lastNode && this.runId === runId) {
-          await new Promise((res) => {
-            setTimeout(() => {
-              if (this.runId !== runId) {
-                return;
-              }
-              this.queues[priority].takeNode()?.task();
-              res()
-            }, this.TIME_DELAY)
-          })
+          if (this.isAsync) {
+            await new Promise<void>((res) => {
+              setTimeout(() => {
+                if (this.runId !== runId) {
+                  return;
+                }
+                this.queues[priority].takeNode()?.task();
+                res();
+              }, this.TIME_DELAY)
+            })
+          } else {
+            this.queues[priority].takeNode()?.task();
+          }
         }
     }
   }
